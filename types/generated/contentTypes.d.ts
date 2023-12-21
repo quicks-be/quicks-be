@@ -362,6 +362,71 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiInboxInbox extends Schema.CollectionType {
+  collectionName: 'inboxes';
+  info: {
+    singularName: 'inbox';
+    pluralName: 'inboxes';
+    displayName: 'inbox';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    sender: Attribute.String;
+    message: Attribute.Text;
+    time: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::inbox.inbox',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::inbox.inbox',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReplyReply extends Schema.CollectionType {
+  collectionName: 'replies';
+  info: {
+    singularName: 'reply';
+    pluralName: 'replies';
+    displayName: 'reply';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    sender: Attribute.String;
+    message: Attribute.Text;
+    date: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::reply.reply',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::reply.reply',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTaskListTaskList extends Schema.CollectionType {
   collectionName: 'task_lists';
   info: {
@@ -719,6 +784,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::inbox.inbox': ApiInboxInbox;
+      'api::reply.reply': ApiReplyReply;
       'api::task-list.task-list': ApiTaskListTaskList;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
